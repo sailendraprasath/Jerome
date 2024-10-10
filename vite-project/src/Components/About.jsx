@@ -48,7 +48,7 @@ const About = () => {
             className="text-center font-About font-bold text-2xl max-sm:text-xl text-transparent bg-clip-text  bg-gradient-to-r from-slate-700 to-red-500"
           >
             <p>
-              Sailesh Supermarket in Madurai offers a wide variety of products,
+              Rose Supermarket in Madurai offers a wide variety of products,
               making it a convenient one-stop shop for all your needs. The store
               is well-stocked, and you can find almost everything you might be
               looking for.

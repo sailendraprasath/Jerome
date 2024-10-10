@@ -1,14 +1,16 @@
-/* eslint-disable react/prop-types */
 import Welcome from "../Components/Welcome";
 import Carousel1 from "../Components/Carousel1";
-import SlideCard from "../Components/SlideCard";
+import CardCarousel from "../Components/CardCarousel";
 
-const Home = ({ addToCart }) => {
+const Home = () => {
+  const user = localStorage.getItem("user");
+  console.log(user);
+
   return (
     <>
       <Welcome />
       <Carousel1 />
-      <SlideCard addToCart={addToCart} />
+      <CardCarousel />
     </>
   );
 };

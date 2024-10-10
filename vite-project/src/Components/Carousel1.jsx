@@ -11,7 +11,7 @@ const Carousel1 = () => {
   ];
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-full p-4 md:px-0">
       <Carousel slides={slides} />
     </div>
   );

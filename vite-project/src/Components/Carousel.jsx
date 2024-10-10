@@ -27,6 +27,7 @@ const Carousel = ({ slides, intervalTime = 3000 }) => {
 
   return (
     <div className="relative w-full max-w-full mx-auto overflow-hidden">
+      {/* Carousel container */}
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -36,7 +37,7 @@ const Carousel = ({ slides, intervalTime = 3000 }) => {
             <img
               src={slide.image}
               alt={slide.alt}
-              className="w-full h-64 md:h-96 object-cover"
+              className="w-full h-56 sm:h-72 md:h-[400px] lg:h-[400px] object-cover"
             />
           </div>
         ))}

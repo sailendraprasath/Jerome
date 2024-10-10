@@ -1,10 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Vegetables from "../assets/vegitables.png";
+import { AllcardsData } from "../data";
+import { useNavigate } from "react-router-dom";
 
-const Cards = ({ addToCart }) => {
+const Cards = ({ addToCart, addToWhish, selectedCategory }) => {
   const [selectData, setSelectData] = useState({}); // Track selected amount for each card
   const [addedItems, setAddedItems] = useState({}); // Track which items have been added
+  const [addedWhsih, setAddedWhish] = useState({}); // Track which items have been added
+
+  //i do here navigate the card details in other page
+  const navigate = useNavigate();
+  const handleCardClick = (card) => {
+    navigate(`/card/${card.id}`, { state: { card } }); // Navigate to the CardShow page with card data
+  };
 
   const handleSelectData = (e, cardId) => {
     const { value } = e.target;
@@ -21,73 +29,6 @@ const Cards = ({ addToCart }) => {
       }));
     }
   };
-
-  const cards = [
-    {
-      id: 1,
-      title: "Apple",
-      img: Vegetables,
-      h1: "Fresh and Crunchy Apples",
-      para: "Enjoy the crisp taste of freshly picked apples, perfect for snacking.",
-      price: 500, // Add price for calculations
-    },
-    {
-      id: 2,
-      title: "Banana",
-      img: Vegetables,
-      h1: "Sweet and Soft Bananas",
-      para: "A great source of energy, bananas are perfect for on-the-go snacking.",
-      price: 250, // Add price for calculations
-    },
-    {
-      id: 3,
-      title: "Orange",
-      img: Vegetables,
-      h1: "Juicy Oranges",
-      para: "Citrusy and refreshing, oranges are rich in vitamin C.",
-      price: 125, // Add price for calculations
-    },
-    {
-      id: 4,
-      title: "Grapes",
-      img: Vegetables,
-      h1: "Sweet and Succulent Grapes",
-      para: "Enjoy a handful of grapes for a burst of sweetness.",
-      price: 250, // Add price for calculations
-    },
-    {
-      id: 5,
-      title: "Strawberries",
-      img: Vegetables,
-      h1: "Delicious Strawberries",
-      para: "Perfect for desserts or snacking, these berries are a favorite!",
-      price: 300, // Add price for calculations
-    },
-    {
-      id: 6,
-      title: "Watermelon",
-      img: Vegetables,
-      h1: "Refreshing Watermelon",
-      para: "Stay hydrated with the juicy sweetness of fresh watermelon.",
-      price: 450, // Add price for calculations
-    },
-    {
-      id: 7,
-      title: "Pineapple",
-      img: Vegetables,
-      h1: "Tropical Pineapple",
-      para: "Enjoy the sweet and tangy flavor of ripe pineapple.",
-      price: 600, // Add price for calculations
-    },
-    {
-      id: 8,
-      title: "Mango",
-      img: Vegetables,
-      h1: "Ripe and Sweet Mango",
-      para: "Indulge in the tropical sweetness of fresh mangoes.",
-      price: 700, // Add price for calculations
-    },
-  ];
 
   const handleAddToCart = (card) => {
     const selectedAmount = selectData[card.id];
@@ -121,22 +62,63 @@ const Cards = ({ addToCart }) => {
       alert("Please select an amount to add to the cart.");
     }
   };
+  const handleAddToWhish = (card) => {
+    const selectedAmount = selectData[card.id];
+    if (selectedAmount) {
+      const pricePerUnit = card.price; // Get price per unit
+      const quantity =
+        selectedAmount === "₹500"
+          ? 1
+          : selectedAmount === "₹250"
+          ? 0.5
+          : selectedAmount === "₹125"
+          ? 0.25
+          : selectedAmount === "₹600"
+          ? 5
+          : 0;
+
+      const itemToWhish = {
+        id: card.id,
+        title: card.title,
+        image: card.img,
+        price: pricePerUnit * quantity,
+        quantity: quantity,
+      };
+
+      addToWhish(itemToWhish);
+      // Call whishToCart with the item data
+      setAddedWhish((prev) => ({
+        ...prev,
+        [card.id]: true, // Mark this card as added
+      }));
+    } else {
+      alert("Please select an amount to add to the whish.");
+    }
+  };
+
+  // Filter cards based on the selected category
+  const filteredCards = AllcardsData.filter(
+    (card) => card.category === selectedCategory
+  );
 
   return (
     <div className="p-4 -mt-20 max-sm:-mt-0">
-      <h1 className="text-2xl text-center font-bold mb-4">Fruits</h1>
+      <h1 className="text-2xl text-center font-bold mb-4">
+        {selectedCategory}
+      </h1>
 
       {/* Scrollable Cards */}
       <div className="flex overflow-x-scroll space-x-4">
-        {cards.map((card) => (
+        {filteredCards.map((card) => (
           <div
             key={card.id}
             className="min-w-[250px] max-w-[250px] bg-rose-50 border rounded-lg shadow-lg p-4"
           >
             <img
+              onClick={() => handleCardClick(card)}
               src={card.img}
               alt={card.title}
-              className="w-full h-[250px] object-cover rounded-md"
+              className="w-full cursor-pointer h-[250px] object-cover rounded-md"
             />
             <div className="flex space-x-[60px] mt-4">
               <select
@@ -172,8 +154,11 @@ const Cards = ({ addToCart }) => {
               >
                 {addedItems[card.id] ? "Added" : "Add to Cart"}
               </button>
-              <button className="bg-rose-400 text-white px-3 py-1 rounded hover:bg-rose-500">
-                Wish
+              <button
+                onClick={() => handleAddToWhish(card)}
+                className="bg-rose-400 text-white px-3 py-1 rounded hover:bg-rose-500"
+              >
+                {addedWhsih[card.id] ? "Done" : "Whish"}{" "}
               </button>
             </div>
           </div>

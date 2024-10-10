@@ -5,7 +5,7 @@ import { FaInstagram } from "react-icons/fa";
 const Contact = () => {
   return (
     <>
-      <div className="bg-rose-300/75 p-10">
+      <div className="bg-rose-300/75 mt-20 p-10">
         <div className="flex  mx-auto items-center  flex-col container font-welcome space-y-3 space-x-6 ">
           <h1 className="text-5xl max-sm:text-3xl font-extrabold text-Contact1  ">
             Contact US
@@ -39,7 +39,7 @@ const Contact = () => {
           <h1 className="text-4xl max-sm:text-2xl font-extrabold text-black ">
             Sailesh Super Market
           </h1>
-          <p>Contact @TheSaileshSuperMarket.com </p>
+          <p>Contact @TheRoseSuperMarket.com </p>
         </div>
       </div>
       <div className="bg-rose-300/75 p-10">
