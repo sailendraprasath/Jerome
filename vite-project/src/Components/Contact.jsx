@@ -20,8 +20,8 @@ const Contact = () => {
       <div>
         <iframe
           className="mx-auto flex relative  w-full h-[250px]"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62883.09643963476!2d78.08162382365258!3d9.917834336827589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sMadurai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1727863648482!5m2!1sen!2sin"
-          // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.118915474929!2d79.83351417510646!3d11.966267888264257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5363a7667693d9%3A0xe3d42802b8180b18!2sRose%20Supermarket%20(%20SUPER%20MARKET%20NEAR%20ME)!5e0!3m2!1sen!2sin!4v1726849019697!5m2!1sen!2sin"
+          // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62883.09643963476!2d78.08162382365258!3d9.917834336827589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sMadurai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1727863648482!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.118915474929!2d79.83351417510646!3d11.966267888264257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5363a7667693d9%3A0xe3d42802b8180b18!2sRose%20Supermarket%20(%20SUPER%20MARKET%20NEAR%20ME)!5e0!3m2!1sen!2sin!4v1726849019697!5m2!1sen!2sin"
         ></iframe>
       </div>
       <div className="bg-rose-300/75 p-12">

@@ -24,7 +24,7 @@ const CardCarousel = () => {
     dots: false, // Disable dots
     infinite: true,
     speed: 500,
-    slidesToShow: 4, // Show 4 cards at once
+    slidesToShow: 5, // Show 4 cards at once
     slidesToScroll: 1,
     responsive: [
       {

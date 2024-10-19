@@ -90,7 +90,7 @@ const Navbar = ({ cartCount, whishCount }) => {
                     <ul className="flex flex-col p-4 text-gray-800">
                       <li className="text-xl py-4 flex">
                         <FaHome size={28} className="mr-4" />
-                        <Link to="/home">Home</Link>
+                        <Link to="/">Home</Link>
                       </li>
                       <li className="text-xl py-4 flex">
                         <AiFillProduct size={28} className="mr-4" />

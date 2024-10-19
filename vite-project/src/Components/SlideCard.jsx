@@ -1,25 +1,35 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react";
 import Sidebar from "../Components/Slidebar";
 import Cards from "../Components/Cards";
+import { AllcardsData } from "../data"; // Ensure your data is correctly imported
+import { Link } from "react-router-dom";
 
 const SlideCard = ({ addToCart, addToWhish }) => {
-  const [selectedCategory, setSelectedCategory] = useState("Fruits"); // Default category
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
 
   return (
     <>
-      <div className="flex flex-col mt-[300px] max-sm:mt-0 lg:flex-row h-screen">
-        {/* Sidebar */}
-        <Sidebar setSelectedCategory={setSelectedCategory} />
+      <div className="bg-rose-300 p-4 px-10 caret-transparent select-none shadow-sm shadow-black/90  mb-[150px] mt-[110px] rounded-tr-[80px] max-sm:rounded-md rounded-bl-[50px]  text-left">
+        <h1 className="text-white text-2xl  md:text-3xl lg:text-4xl font-bold">
+          PRODUCTS
+        </h1>
+        <p className="text-white text-sm md:text-base lg:text-lg mt-2">
+          <Link className="cursor-pointer" to={"/"}>
+            HOME
+          </Link>
+          / PRODUCTS
+        </p>
+      </div>
 
-        {/* Pass handler to Sidebar */}
-        {/* Scrollable Cards */}
-        <div className="lg:w-3/4 w-full mt-[-150px] max-sm:mt-0 p-4">
+      <div className="flex flex-col lg:flex-row h-screen">
+        <Sidebar setSelectedCategory={setSelectedCategory} />
+        <div className="lg:w-3/4 w-full p-4">
           <Cards
             addToCart={addToCart}
             addToWhish={addToWhish}
-            selectedCategory={selectedCategory} // Pass selected category to Cards
+            selectedCategory={selectedCategory}
+            AllcardsData={AllcardsData}
           />
         </div>
       </div>

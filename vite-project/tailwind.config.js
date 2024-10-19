@@ -10,6 +10,7 @@ export default {
         About: "#3C3D37",
       },
       fontFamily: {
+        catalog: "Playfair Display, serif",
         welcome: "DM Serif Text serif",
         About: "Coming Soon cursive",
       },
