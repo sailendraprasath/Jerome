@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -70,7 +75,6 @@ const App = () => {
     setWhisItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  // Loading spinner or message
   const LoadingIndicator = () => (
     <div className="flex justify-center items-center h-screen">
       <div className="loader"></div>
@@ -93,40 +97,41 @@ const App = () => {
     </div>
   );
 
+  const LocationBasedNavbar = () => {
+    const location = useLocation();
+    const hideNavbarOnPaths = ["/login", "/register"];
+    return !hideNavbarOnPaths.includes(location.pathname) ? (
+      <Navbar cartCount={cartItems.length} whishCount={whishItems.length} />
+    ) : null;
+  };
+
   return (
     <Router>
-      <Navbar cartCount={cartItems.length} whishCount={whishItems.length} />
+      <LocationBasedNavbar />
       {loading ? (
         <LoadingIndicator />
       ) : (
         <Routes>
-          {/* Home page */}
-          <Route path="/home" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Home />} />
-          {/* Merchandise page */}
           <Route
             path="/MerchandisePage"
             element={
               <Merchandise addToCart={addToCart} addToWhish={addToWhish} />
             }
           />
-          {/* About page */}
           <Route path="/Aboutpage" element={<AboutPage />} />
-          {/* Card show page for displaying card details */}
           <Route
             path="/card/:id"
             element={<CardShow addToCart={addToCart} addToWhish={addToWhish} />}
           />
-          {/* Contact page */}
           <Route path="/Contactpage" element={<ContactPage />} />
-          {/* Cart page */}
           <Route
             path="/Cartpage"
             element={<CartPage cartItems={cartItems} />}
           />
-          {/* Wishlist page */}
           <Route
             path="/Whishlistpage"
             element={
@@ -139,7 +144,6 @@ const App = () => {
           />
         </Routes>
       )}
-      {/* footer */}
     </Router>
   );
 };

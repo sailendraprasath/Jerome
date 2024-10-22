@@ -5,7 +5,7 @@ import PaginationButtons from "./PaginationButtons";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
 const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
   const [selectData, setSelectData] = useState({});
   const [addedItems, setAddedItems] = useState({});
@@ -36,6 +36,12 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
   const notify = (message) => toast.error(message);
 
   const handleAddToCart = async (card) => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      notify("Please log in to add items to the cart.");
+      return;
+    }
     setLoadingCart(true);
 
     const selectedQuantity = selectData[card.id];
@@ -65,8 +71,13 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
 
     setLoadingCart(false);
   };
-
   const handleAddToWhish = async (card) => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      notify("Please log in to add items to the wishlist.");
+      return;
+    }
     setLoadingWhish(true);
     const selectedQuantity = selectData[card.id];
     const selectedOption = card.options.find(
@@ -94,7 +105,6 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
 
     setLoadingWhish(false);
   };
-
   const filteredCards =
     selectedCategory === "All Products"
       ? AllcardsData
@@ -142,6 +152,7 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
               alt={card.title}
               className="w-full cursor-pointer h-[250px] object-cover rounded-md"
             />
+
             <div className="flex items-center justify-between mt-4">
               <select
                 name="amount"
@@ -187,11 +198,12 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
             <div className="mt-4 flex justify-between">
               <button
                 onClick={() => handleAddToCart(card)}
-                className={`bg-green-500 text-white px-3 py-1 rounded ${
+                className={`flex items-center bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition ${
                   loadingCart ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={loadingCart}
               >
+                <FaShoppingCart className="mr-1" />
                 {loadingCart
                   ? "Adding..."
                   : addedItems[card.id]
@@ -200,11 +212,12 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
               </button>
               <button
                 onClick={() => handleAddToWhish(card)}
-                className={`bg-rose-400 text-white px-3 py-1 rounded ${
+                className={`flex items-center bg-rose-400 text-white px-3 py-1 rounded hover:bg-rose-500 transition ${
                   loadingWhish ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={loadingWhish}
               >
+                <FaHeart className="mr-1" />
                 {loadingWhish
                   ? "Adding..."
                   : addedWhish[card.id]

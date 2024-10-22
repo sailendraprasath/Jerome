@@ -1,11 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoBagRemove } from "react-icons/io5";
 import EmptyCartImage from "../assets/About/empty.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const WishlistPage = ({ whishItems, addToCart, removeFromWhish }) => {
   const [items, setItems] = useState(whishItems);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      setShowLoginAlert(true);
+    }
+  }, []);
+
+  const handleLoginRedirect = () => {
+    setShowLoginAlert(false);
+    navigate("/login");
+  };
 
   const moveToCart = (index) => {
     const item = items[index];
@@ -44,6 +58,20 @@ const WishlistPage = ({ whishItems, addToCart, removeFromWhish }) => {
 
   return (
     <>
+      {showLoginAlert && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-xl font-semibold mb-4">Login Required</h2>
+            <p className="mb-6">Please log in to access your wishlist.</p>
+            <button
+              onClick={handleLoginRedirect}
+              className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg"
+            >
+              Go to Login
+            </button>
+          </div>
+        </div>
+      )}
       {items.length !== 0 ? (
         <div className="bg-rose-300 p-4 px-10 caret-transparent select-none shadow-sm shadow-black/90 mt-[110px] rounded-tr-[80px] max-sm:rounded-md rounded-bl-[50px] text-left">
           <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold">
@@ -65,14 +93,14 @@ const WishlistPage = ({ whishItems, addToCart, removeFromWhish }) => {
         {items.length === 0 ? (
           <div className="text-center text-gray-500">
             <h2 className="text-4xl font-bold text-center font-welcome mb-6">
-              Your Cart
+              Your Whishlist
             </h2>
             <img
               src={EmptyCartImage}
               alt="Empty Cart"
               className="mx-auto mb-4 w-1/3"
             />
-            <p>Your cart is empty.</p>
+            <p>Your Whislist is empty.</p>
           </div>
         ) : (
           <>

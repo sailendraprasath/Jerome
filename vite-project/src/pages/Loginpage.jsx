@@ -1,80 +1,86 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import userData from "../lib/user.json"; // Import your data.json
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Initialize localStorage with data from data.json (if not already initialized)
     const storedUsers = JSON.parse(localStorage.getItem("users"));
     if (!storedUsers) {
-      localStorage.setItem("users", JSON.stringify(userData.user)); // Load data.json users into localStorage
+      localStorage.setItem("users", JSON.stringify([]));
     }
   }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    // Fetch existing users from localStorage
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if the user exists
-    const user = users.find(
-      (u) => u.email === email && u.password === password
-    );
-
-    if (user) {
-      // Login successful, store only the user ID
-      localStorage.setItem("userId", user.id); // Save only user ID
-      setErrorMessage("");
-      navigate("/home");
-    } else {
-      // Login failed
-      setErrorMessage("Invalid email or password");
+    if (!email || !password) {
+      setErrorMessage("Both email and password are required");
+      return;
     }
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const foundUser = existingUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+    if (!foundUser) {
+      setErrorMessage("Invalid email or password");
+      return;
+    }
+
+    localStorage.setItem("userId", foundUser.id);
+    setErrorMessage("");
+    setSuccessMessage("Login successful! Redirecting to profile...");
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-sm w-full">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+    <div className="min-h-screen flex items-center justify-center bg-rose-100 p-6">
+      <div className="bg-rose-50 p-8 rounded-lg shadow-lg max-w-sm w-full bg-gradient-to-r from-rose-50 to-rose-100">
+        <h2 className="text-3xl font-bold text-center mb-6 text-rose-800">
+          Login
+        </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
+            <label className="block text-rose-800">Email</label>
             <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
               type="email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border-b-2 bg-transparent border-rose-300 focus:outline-none text-rose-800"
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700">Password</label>
+          <div className="mb-4">
+            <label className="block text-rose-800">Password</label>
             <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
               type="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border-b-2 bg-transparent border-rose-300 focus:outline-none text-rose-800"
             />
           </div>
           {errorMessage && (
             <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
           )}
+          {successMessage && (
+            <p className="text-green-500 text-sm mb-4">{successMessage}</p>
+          )}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            className="w-full bg-rose-500 text-white py-2 rounded-lg hover:bg-rose-600 transition duration-300"
           >
             Login
           </button>
         </form>
-        <p className="text-center text-gray-500 mt-4">
-          Dont have an account?{" "}
-          <a href="/register" className="text-blue-500">
-            Sign Up
+        <p className="text-center text-rose-800 mt-4">
+          Don&lsquo;t have an account?{" "}
+          <a href="/register" className="text-rose-600 hover:text-rose-800">
+            Register
           </a>
         </p>
       </div>
