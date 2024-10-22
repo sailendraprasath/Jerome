@@ -2,27 +2,26 @@
 import { FaSearch, FaHome, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { TbTruckDelivery } from "react-icons/tb";
+// import { TbTruckDelivery } from "react-icons/tb";
 import { MdContacts } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FcAbout } from "react-icons/fc";
 import { IoIosArrowUp } from "react-icons/io";
 import { AiFillProduct } from "react-icons/ai";
 import { IoMdPerson } from "react-icons/io";
-import Logo from "../assets/Logo.webp"; // Adjust the path if needed
+import Logo from "../assets/Logo.webp";
 import WhishCount from "../Components/WhishCount";
 import CartCount from "../Components/CartCount";
 
 const Navbar = ({ cartCount, whishCount }) => {
   const [Msearch, SetMsearch] = useState(false);
   const [nav, setNav] = useState(false);
-  const navigate = useNavigate(); // Initialize the navigate function
-
+  const navigate = useNavigate();
   // Logout function
   const handleLogout = () => {
-    localStorage.clear(); // Clear local storage
-    navigate("/"); // Navigate to the login page
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
@@ -84,7 +83,7 @@ const Navbar = ({ cartCount, whishCount }) => {
                     className="absolute right-4 top-6 cursor-pointer duration-700 rotate-180 scale-90 transition hover:scale-110 hover:-rotate-180 hover:duration-300"
                   />
                   <h2 className="text-2xl p-4">
-                    <span className="font-bold">Sailesh </span>
+                    <span className="font-bold">Rose </span>
                   </h2>
                   <nav>
                     <ul className="flex flex-col p-4 text-gray-800">
@@ -132,10 +131,10 @@ const Navbar = ({ cartCount, whishCount }) => {
                         </div>
                       </div>
 
-                      <li className="text-xl py-4 flex">
+                      {/* <li className="text-xl py-4 flex">
                         <TbTruckDelivery size={28} className="mr-4" />
                         Orders
-                      </li>
+                      </li> */}
                       <li className="text-xl py-4 flex">
                         <IoMdPerson size={28} className="mr-4" />
                         <Link to="/profile">Profile</Link>

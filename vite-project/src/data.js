@@ -77,10 +77,10 @@ export const AllcardsData = [
   {
     id: 1,
     title: "Bananas",
-    img: Vegetables, // Ensure this path is correct
+    img: Vegetables,
     options: [
-      { quantity: "500g", price: "₹50" }, // Quantity in grams and price as a number
-      { quantity: "1kg", price: "₹90" }, // Quantity in kilograms
+      { quantity: "500g", price: "₹50" },
+      { quantity: "1kg", price: "₹90" },
     ],
     unit: "g",
     para: "Fresh bananas",

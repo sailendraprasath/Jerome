@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { IoBagRemove } from "react-icons/io5";
-import EmptyCartImage from "../assets/About/empty.png"; // Ensure this path is correct
+import EmptyCartImage from "../assets/About/empty.png";
 import { Link } from "react-router-dom";
 
 const CartPage = ({ cartItems }) => {
@@ -16,20 +16,20 @@ const CartPage = ({ cartItems }) => {
     if (item.unit === "g") {
       return item.quantity.toString().includes("g")
         ? item.quantity
-        : `${item.quantity}g`; // Ensure the quantity includes 'g'
+        : `${item.quantity}g`;
     } else if (item.unit === "kg") {
-      return `${item.quantity}`; // Handle kg case
+      return `${item.quantity}`;
     } else if (item.unit === "liter") {
-      return `${item.quantity} liter`; // Handle liter
+      return `${item.quantity} liter`;
     } else if (item.unit === "pieces") {
-      return `${item.quantity} piece${item.quantity > 1 ? "s" : ""}`; // Handle pieces with plural form
+      return `${item.quantity} piece${item.quantity > 1 ? "s" : ""}`;
     }
-    return `${item.quantity}`; // Default case for other units
+    return `${item.quantity}`;
   };
 
   const calculateTotal = () => {
     return items.reduce((total, item) => {
-      total += item.price; // Simply sum up the price for each item entry
+      total += item.price;
       return total;
     }, 0);
   };

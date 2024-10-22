@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Sidebar from "../Components/Slidebar";
 import Cards from "../Components/Cards";
-import { AllcardsData } from "../data"; // Ensure your data is correctly imported
+import { AllcardsData } from "../data";
 import { Link } from "react-router-dom";
 
 const SlideCard = ({ addToCart, addToWhish }) => {

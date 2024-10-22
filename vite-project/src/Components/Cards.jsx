@@ -38,7 +38,7 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
   const handleAddToCart = async (card) => {
     setLoadingCart(true);
 
-    const selectedQuantity = selectData[card.id]; // Assuming this has something like '₹50'
+    const selectedQuantity = selectData[card.id];
     const selectedOption = card.options.find(
       (option) => option.price === selectedQuantity
     );
@@ -48,12 +48,12 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
         id: card.id,
         title: card.title,
         image: card.img,
-        price: parseInt(selectedQuantity.replace(/[^\d]/g, "")), // Correct price extraction
-        quantity: selectedOption.quantity, // Keep the quantity as it is, e.g., '500g'
-        unit: card.unit, // Add the unit to the item, e.g., 'g' or 'pieces'
+        price: parseInt(selectedQuantity.replace(/[^\d]/g, "")),
+        quantity: selectedOption.quantity,
+        unit: card.unit,
       };
 
-      addToCart(itemToAdd); // Pass item with both price and proper quantity+unit
+      addToCart(itemToAdd);
 
       setAddedItems((prev) => ({
         ...prev,
@@ -78,9 +78,11 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
         id: card.id,
         title: card.title,
         image: card.img,
-        price: parseInt(selectedQuantity.replace(/[^\d]/g, "")), // Extract price number
-        quantity: parseInt(selectedOption.quantity),
+        price: parseInt(selectedQuantity.replace(/[^\d]/g, "")),
+        quantity: selectedOption.quantity,
+        unit: card.unit,
       };
+
       addToWhish(itemToWhish);
       setAddedWhish((prev) => ({
         ...prev,
@@ -89,6 +91,7 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
     } else {
       notify("Please select an amount to add to the wish.");
     }
+
     setLoadingWhish(false);
   };
 
@@ -108,9 +111,9 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
       <ToastContainer />
       <motion.h1
         className="text-4xl text-center font-welcome font-bold mb-4"
-        initial={{ opacity: 0, y: -20 }} // Initial state
-        animate={{ opacity: 1, y: 0 }} // Animation state
-        transition={{ duration: 0.5 }} // Transition duration
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         {selectedCategory}
       </motion.h1>
@@ -118,7 +121,7 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
         className="text-lg text-center font-semibold mb-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }} // Delayed animation
+        transition={{ duration: 0.5, delay: 0.1 }}
       >
         Total Items: {filteredCards.length}
       </motion.h2>
@@ -128,10 +131,10 @@ const Cards = ({ addToCart, addToWhish, selectedCategory, AllcardsData }) => {
           <motion.div
             key={card.id}
             className="bg-rose-50 border rounded-lg shadow-lg hover:shadow-2xl hover:duration-500 hover:shadow-black p-4"
-            initial={{ opacity: 0, scale: 0.9 }} // Initial state for each card
-            animate={{ opacity: 1, scale: 1 }} // Animation state
-            exit={{ opacity: 0, scale: 0.9 }} // Exit animation
-            transition={{ duration: 0.3 }} // Transition duration for the card
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
           >
             <img
               onClick={() => handleCardClick(card)}

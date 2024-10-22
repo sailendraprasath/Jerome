@@ -4,43 +4,39 @@ import { useLocation } from "react-router-dom";
 
 const CardShow = ({ addToCart, addToWhish }) => {
   const location = useLocation();
-  const { card } = location.state; // Get the card details from state
+  const { card } = location.state;
 
-  const [quantity, setQuantity] = useState(1); // State for managing quantity
+  const [quantity, setQuantity] = useState(1);
 
-  // Function to increase quantity
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  // Function to decrease quantity, with a minimum value of 1
   const handleDecrease = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
 
-  // Function to handle adding to cart
   const handleAddToCart = () => {
     const item = {
       id: card.id,
       title: card.title,
       image: card.img,
-      price: card.price * quantity, // Total price based on quantity
+      price: card.price * quantity,
       quantity: quantity,
     };
-    addToCart(item); // Call the addToCart function
+    addToCart(item);
     alert(`${card.title} added to cart!`);
   };
 
-  // Function to handle adding to wishlist
   const handleAddToWish = () => {
     const item = {
       id: card.id,
       title: card.title,
       image: card.img,
-      price: card.price * quantity, // Total price based on quantity
+      price: card.price * quantity,
       quantity: quantity,
     };
-    addToWhish(item); // Call the addToWhish function
+    addToWhish(item);
     alert(`${card.title} added to wishlist!`);
   };
 

@@ -14,7 +14,7 @@ const Carousel = ({ slides, intervalTime = 3000 }) => {
       );
     }, intervalTime);
 
-    return () => clearInterval(autoSlide); // Cleanup the interval on component unmount
+    return () => clearInterval(autoSlide);
   }, [currentSlide, length, intervalTime]);
 
   const nextSlide = () => {

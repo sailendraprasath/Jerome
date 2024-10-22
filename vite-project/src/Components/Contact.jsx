@@ -1,8 +1,45 @@
+import React from "react";
+import { AiOutlineMail, AiOutlineUser, AiOutlineMessage } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { FaSquareFacebook } from "react-icons/fa6";
 import { IoLogoYoutube } from "react-icons/io";
 import { FaInstagram } from "react-icons/fa";
 
 const Contact = () => {
+  const [result, setResult] = React.useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending...");
+
+    const formData = new FormData(event.target);
+    formData.append("access_key", "eb0a1a9c-8b8e-4c65-ac30-414e484ac366"); // Add access key for Web3Forms
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        event.target.reset();
+        toast.success("Form Submitted Successfully!");
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+        toast.error(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      setResult("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
+    }
+  };
   return (
     <>
       <div className="bg-rose-300/75 mt-20 p-10">
@@ -11,8 +48,8 @@ const Contact = () => {
             Contact US
           </h1>
           <p className="text-center   max-sm:text-[15px]  text-3xl">
-            {/* New ECR, 100 Feet Rd, Solai Nagar, Kottakuppam, Tamil Nadu 605104 */}
-            115 mela kailasapuram thathaneri main road madurai
+            New ECR, 100 Feet Rd, Solai Nagar, Kottakuppam, Tamil Nadu 605104
+            {/* 115 mela kailasapuram thathaneri main road madurai */}
           </p>
           <p className="text-xl">(06384000472)</p>
         </div>
@@ -54,6 +91,73 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <section className="contact bg-white p-16 max-md:p-6 rounded-lg shadow-lg w-full max-w-full mx-auto min-h-[500px] flex flex-col justify-center">
+        <form onSubmit={onSubmit} className="w-full ">
+          <h2 className="max-sm:text-3xl font-semibold font-welcome text-4xl  mb-6 text-center text-gray-800">
+            Reach Out to Us
+          </h2>
+
+          {/* Full Name */}
+          <div className="input-box mb-4">
+            <label className="block mb-2 text-gray-800">Full Name</label>
+            <div className="flex items-center border-b-2 border-gray-300 focus-within:border-rose-500 transition duration-300">
+              <AiOutlineUser className="text-gray-500 text-xl mr-2" />
+              <input
+                type="text"
+                className="field w-full bg-transparent focus:outline-none p-2"
+                placeholder="Enter Your name"
+                name="name"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Email Address */}
+          <div className="input-box mb-4">
+            <label className="block mb-2 text-gray-800">Email Address</label>
+            <div className="flex items-center border-b-2 border-gray-300 focus-within:border-rose-500 transition duration-300">
+              <AiOutlineMail className="text-gray-500 text-xl mr-2" />
+              <input
+                type="email"
+                className="field w-full bg-transparent focus:outline-none p-2"
+                placeholder="Enter Your email"
+                name="email"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Your Message */}
+          <div className="input-box mb-6">
+            <label className="block mb-2 text-gray-800">Your Message</label>
+            <div className="flex items-start border-b-2 border-gray-300 focus-within:border-rose-500 transition duration-300">
+              <AiOutlineMessage className="text-gray-500 text-xl mr-2 mt-2" />
+              <textarea
+                className="field w-full bg-transparent focus:outline-none p-2 h-24 resize-none"
+                placeholder="Enter your message"
+                name="message"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          {/* Result message */}
+          <div className="text-center mb-4 text-sm text-gray-800">{result}</div>
+
+          {/* Submit Button */}
+          <div className="text-center">
+            <button
+              type="submit"
+              className="bg-rose-500 text-white py-2 px-4 rounded-lg hover:bg-rose-600 transition duration-300"
+            >
+              Send Message
+            </button>
+          </div>
+        </form>
+
+        {/* Toast container to display notifications */}
+        <ToastContainer />
+      </section>
     </>
   );
 };

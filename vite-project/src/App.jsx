@@ -15,55 +15,57 @@ import Profile from "./pages/Profile";
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [whishItems, setWhisItems] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(false); // Loading state
 
-  // Simulate loading time
   const simulateLoading = () => {
     setLoading(false);
     setTimeout(() => {
       setLoading(false);
-    }); // Simulate a 1-second loading time
-  };
-
-  // Call simulateLoading when the component mounts or when route changes
-  useEffect(() => {
-    simulateLoading();
-  }, []); // Empty array ensures this runs once on mount
-
-  // Function to add items to the wishlist
-  const addToWhish = (item) => {
-    setWhisItems((pastwhish) => {
-      const existWhish = pastwhish.find(
-        (pastwhish) => pastwhish.id === item.id
-      );
-      if (existWhish) {
-        return pastwhish.map((pastwhish) =>
-          pastwhish.id === item.id
-            ? { ...existWhish, quantity: existWhish.quantity + item.quantity }
-            : pastwhish
-        );
-      }
-      return [...pastwhish, { ...item, quantity: item.quantity }];
     });
   };
 
-  // Function to add items to the cart
+  useEffect(() => {
+    simulateLoading();
+  }, []);
+
+  const addToWhish = (item) => {
+    setWhisItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (wishlistItem) => wishlistItem.id === item.id
+      );
+
+      if (existingItem) {
+        return prevItems.map((wishlistItem) =>
+          wishlistItem.id === item.id
+            ? {
+                ...existingItem,
+                quantity: existingItem.quantity + item.quantity,
+              }
+            : wishlistItem
+        );
+      }
+
+      return [
+        ...prevItems,
+        {
+          ...item,
+          quantity: item.quantity,
+        },
+      ];
+    });
+  };
+
   const addToCart = (item) => {
     setCartItems((prevItems) => [
       ...prevItems,
       {
         ...item,
-        quantity: item.quantity, // Ensure quantity already includes unit like '500g'
-        total: item.price, // Store the given price
+        quantity: item.quantity,
+        total: item.price,
       },
     ]);
   };
 
-  //function to remove all items in the cart
-  // const removefromcart = (itemId) => {
-  //   setCartItems((prevItem) => prevItem.filter((item) => item.id !== itemId));
-  // };
-  // Function to remove items from the wishlist
   const removeFromWhish = (itemId) => {
     setWhisItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
@@ -95,7 +97,7 @@ const App = () => {
     <Router>
       <Navbar cartCount={cartItems.length} whishCount={whishItems.length} />
       {loading ? (
-        <LoadingIndicator /> // Show loading indicator if loading
+        <LoadingIndicator />
       ) : (
         <Routes>
           {/* Home page */}
